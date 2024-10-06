@@ -5,7 +5,13 @@ description = "Streamlit app for AI control system"
 authors = [
     {name = "j25ng", email = "jsan2861@gmail.com"},
 ]
-dependencies = []
+dependencies = [
+    "streamlit>=1.39.0",
+    "mtcnn>=0.1.1",
+    "requests>=2.32.3",
+    "setuptools>=75.1.0",
+    "tensorflow>=2.17.0",
+]
 requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
