@@ -3,6 +3,7 @@ from mtcnn import MTCNN
 from PIL import Image
 import numpy as np
 import requests
+import os
 import io
 
 def find_face(img):
@@ -13,7 +14,8 @@ def find_face(img):
     return faces
 
 def upload_img(img, name):
-    url = "http://localhost:8022/uploadfile/"
+    ip = os.getenv("EC2_IP", "localhost")
+    url = f"http://{ip}:8022/uploadfile/"
 
     img_bytes = io.BytesIO()
     img.save(img_bytes, format='JPEG')
