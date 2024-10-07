@@ -2,7 +2,7 @@ FROM python:3.11
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y libgl1-mesa-glx \
     build-essential \
     curl \
     software-properties-common \
@@ -15,4 +15,4 @@ RUN pip3 install -r requirements.txt
 
 EXPOSE 8501
 
-ENTRYPOINT ["streamlit", "run", "src/t2-streamlit/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "src/t2_streamlit/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
