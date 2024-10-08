@@ -6,6 +6,6 @@ page_3 = st.Page("pages/label.py", title="Add label")
 
 pg = st.navigation({
     "Upload" : [page_1],
-    "Chart" : [page_2, page_3]
+    "Data" : [page_2, page_3]
     })
 pg.run()
