@@ -6,6 +6,18 @@ import requests
 import os
 import io
 
+age_mapping = {
+    0: '0-2 years',
+    1: '3-9 years',
+    2: '10-19 years',
+    3: '20-29 years',
+    4: '30-39 years',
+    5: '40-49 years',
+    6: '50-59 years',
+    7: '60-69 years',
+    8: '70+ years'
+}
+
 def find_face(img):
     detector = MTCNN()
     

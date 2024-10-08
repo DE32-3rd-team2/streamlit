@@ -4,10 +4,24 @@ import numpy as np
 import requests
 import os
 
-def load_data():
-    ip = os.getenv("EC2_IP", "localhost")
-    url = f"http://{ip}:8022/all"
+st.title("Result")
 
+age_mapping = {
+    0: '0-2',
+    1: '3-9',
+    2: '10-19',
+    3: '20-29',
+    4: '30-39',
+    5: '40-49',
+    6: '50-59',
+    7: '60-69',
+    8: '70+'
+}
+
+ip = os.getenv("EC2_IP", "localhost")
+
+def load_data():
+    url = f"http://{ip}:8022/all"
     r = requests.get(url).json()
     return r
 
@@ -15,9 +29,15 @@ data = load_data()
 df = pd.DataFrame(data)
 
 for i in range(len(df)):
-    with st.container(border=True):
-        img, info = st.columns([1, 3])
-        img.image(df['file_path'][i], width=100)
-        info.markdown(f"#### {df['num'][i]}. {df['origin_name'][i]}")
-        info.write(f"예측 결과 : {df['prediction_result'][i]}")
-        info.write(f"실제 정답 : {df['answer'][i]}")
+    if df['prediction_result'][i] is not None:
+        with st.container(border=True):
+            img, info = st.columns([1, 3])
+            img.image(df['file_path'][i], width=100)
+            p_age = age_mapping[int(df['prediction_result'][i])]
+            r_age = age_mapping[int(df['answer'][i])]
+            info.markdown("")
+            info.markdown("")
+            info.markdown(f"사진 속 사람의 예상 나이대는 :blue-background[**{p_age}**] 입니다.")
+            info.markdown(f"사진 속 사람의 실제 나이대는 :red-background[**{r_age}**] 입니다.")
+
+

@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y libgl1-mesa-glx \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-RUN git clone -b 0.5/label https://github.com/DE32-3rd-team2/streamlit.git .
+RUN git clone -b 0.6/fix https://github.com/DE32-3rd-team2/streamlit.git .
 
 RUN pip3 install -r requirements.txt
 
