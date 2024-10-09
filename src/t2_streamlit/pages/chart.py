@@ -35,14 +35,6 @@ df = df.sort_values(by="answer")
 
 chart_data = df[['age_band', 'accuracy']].set_index('age_band')
 
-with st.container():
-    st.subheader("전체 데이터 예측 정확도 통계", divider="gray")
-    st.bar_chart(
-        chart_data,
-        x_label="Age Band",
-        y_label="Prediction Accuracy"
-    )
-
 total_correct = df['correct'].sum()
 total_incorrect = df['total_count'].sum() - total_correct
 
@@ -51,22 +43,27 @@ sizes = [total_correct, total_incorrect]
 explode = (0.1, 0)
 
 fig, ax = plt.subplots(figsize=(4, 4))
-ax.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
-        shadow=True, startangle=90)
+ax.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
 ax.axis('equal')
-
-with st.container():
-    st.subheader("나이대별 예측 정확도 통계", divider="gray")
-    st.pyplot(fig)
 
 data_all = load_data("all")
 df = pd.DataFrame(data_all).dropna(subset=['prediction_result', 'answer'])
-
 df['error'] = df['prediction_result'].astype(int) - df['answer'].astype(int)
 
 error_counts = df['error'].value_counts().reindex(range(0, 9), fill_value=0)
-
 error_counts = error_counts[error_counts > 0]
+
+with st.container():
+    st.subheader("전체 데이터 예측 정확도 통계", divider="gray")
+    st.pyplot(fig)
+
+with st.container():
+    st.subheader("나이대별 예측 정확도 통계", divider="gray")
+    st.bar_chart(
+        chart_data,
+        x_label="Age Band",
+        y_label="Prediction Accuracy"
+    )
 
 with st.container():
     st.subheader("오차율 분석 통계", divider="gray")
