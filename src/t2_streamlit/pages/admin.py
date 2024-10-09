@@ -42,7 +42,7 @@ def login():
             st.error("비밀번호가 잘못되었습니다.")
 
 def admin_page():
-    st.title("All Data")
+    st.title("Admin Dashboard")
 
     data = load_data()
     df = pd.DataFrame(data)
