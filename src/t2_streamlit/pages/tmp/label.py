@@ -4,7 +4,7 @@ import numpy as np
 import requests
 import os
 
-st.title("Add Label")
+st.title("관리자 모드")
 
 age_mapping = {
     0: '0-2 years',

@@ -1,6 +1,7 @@
 import streamlit as st
 from mtcnn import MTCNN
 from PIL import Image
+from requests.exceptions import ConnectionError
 import numpy as np
 import requests
 import os
@@ -54,5 +55,15 @@ if pic is not None:
             st.image(face_crop, width=100)
             
             file_name = f"{pic.name.split('.')[-2]}({i+1})"
-            r = upload_img(face_crop, file_name)
-            st.write(r.json())
+
+            try:
+                r = upload_img(face_crop, file_name)
+                if r.status_code == 200:
+                    st.success("이미지 업로드 성공!")
+                else:
+                    st.warning("이미지 업로드에 실패하였습니다.")
+            except ConnectionError:
+                st.warning("연결 오류 발생 : 이미지 업로드에 실패하였습니다.")
+            except Exception as e:
+                st.error(f"알 수 없는 오류 발생: {e}")
+
