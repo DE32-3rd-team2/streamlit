@@ -19,15 +19,15 @@ age_band_mapping = {
 
 st.title("Chart")
 
-def load_data():
+def load_data(path):
     ip = os.getenv("EC2_IP", "localhost")
-    url = f"http://{ip}:8022/agg"
+    url = f"http://{ip}:8022/{path}"
 
     r = requests.get(url).json()
     return r
 
-data = load_data()
-df = pd.DataFrame(data)
+data_agg = load_data("agg")
+df = pd.DataFrame(data_agg)
 
 df['accuracy'] = df['correct'] / df['total_count']
 df['age_band'] = df['answer'].map(age_band_mapping)
@@ -58,3 +58,20 @@ ax.axis('equal')
 with st.container():
     st.subheader("나이대별 예측 정확도 통계", divider="gray")
     st.pyplot(fig)
+
+data_all = load_data("all")
+df = pd.DataFrame(data_all).dropna(subset=['prediction_result', 'answer'])
+
+df['error'] = df['prediction_result'].astype(int) - df['answer'].astype(int)
+
+error_counts = df['error'].value_counts().reindex(range(0, 9), fill_value=0)
+
+error_counts = error_counts[error_counts > 0]
+
+with st.container():
+    st.subheader("오차율 분석 통계", divider="gray")
+    st.bar_chart(
+        error_counts,
+        x_label="Error",
+        y_label="Count"
+        )
