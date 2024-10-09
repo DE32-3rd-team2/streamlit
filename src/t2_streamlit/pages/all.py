@@ -29,12 +29,15 @@ data = load_data()
 df = pd.DataFrame(data)
 
 for i in range(len(df)):
-    if df['prediction_result'][i] is not None:
+    p = df['prediction_result'][i]
+    r = df['answer'][i]
+
+    if p is not None and r is not None:
         with st.container(border=True):
             img, info = st.columns([1, 3])
             img.image(df['file_path'][i], width=100)
-            p_age = age_mapping[int(df['prediction_result'][i])]
-            r_age = age_mapping[int(df['answer'][i])]
+            p_age = age_mapping[int(p)]
+            r_age = age_mapping[int(r)]
             info.markdown("")
             info.markdown("")
             info.markdown(f"사진 속 사람의 예상 나이대는 :blue-background[**{p_age}**] 입니다.")
