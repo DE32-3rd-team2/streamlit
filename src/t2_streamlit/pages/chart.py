@@ -60,7 +60,8 @@ with st.container():
     )
 
 data_all = load_data("all")
-df_a = pd.DataFrame(data_all)
+# null값 제외
+df_a = pd.DataFrame(data_all).dropna(subset=['prediction_result', 'answer'])
 
 df_a['error'] = abs(df_a['prediction_result'].astype(int) - df_a['answer'].astype(int))
 error_counts = df_a['error'].value_counts().reindex(range(0, 9), fill_value=0)
