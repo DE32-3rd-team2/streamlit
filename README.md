@@ -53,7 +53,7 @@ http://<your_ip>:8032
 ![image](https://github.com/user-attachments/assets/5e154209-502c-452f-8d32-d14e51c5fca9)
 
 #### Admin Page
-- Input Password
+- Input Password : <admin_pwd>로 로그인
 ![image](https://github.com/user-attachments/assets/f04d9918-3d62-4cab-bac2-615ca6e23760)
 - Dashboard
 ![image](https://github.com/user-attachments/assets/7d8f6b93-68e8-4684-a7eb-350171f08b5f)
